@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        aq.ajax("http://sprout.kr/login.php?nickname=" + nickname + "&password=" + password, JSONObject.class, cb);
+        aq.ajax("http://sprout.kr/?nickname=" + nickname + "&password=" + password, JSONObject.class, cb);
     }
 
 
