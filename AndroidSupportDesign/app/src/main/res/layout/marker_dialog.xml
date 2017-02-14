@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lay_background"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#E12929"
+        android:padding="30dp"
+        android:id="@+id/dialog">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:id="@+id/title"
+            android:text="Will you add new marker?"
+            android:textSize="20dp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            />
+
+        <EditText
+            android:layout_below="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="#fff"
+            android:background="#37ffffff"
+            android:id="@+id/edit_title"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            />
+
+        <EditText
+            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/edit_title"
+            android:id="@+id/edit_desc"
+            android:background="#37ffffff"
+            android:textColor="#fff"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/edit_desc"
+            android:id="@+id/photo_group">
+            <Button
+                android:text="Take Photo"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/btn_photo"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="#fff"
+                android:textSize="10dp"
+                android:background="#AE3D0E"
+                />
+            <Button
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:id="@+id/btn_gallery"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textSize="10dp"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:background="#AE3D0E"
+                android:text="Take on Gallery"
+                android:layout_marginLeft="10dp"
+                />
+        </LinearLayout>
+
+        <Button
+            android:layout_below="@+id/photo_group"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="#fff"
+            android:textSize="20dp"
+            android:background="#AE3D0E"
+            android:text="ADD"
+            android:id="@+id/btn_add"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
