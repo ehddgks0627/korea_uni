@@ -87,40 +87,36 @@ public class SignupActivity extends AppCompatActivity {
             new android.os.Handler().postDelayed(
                     new Runnable() {
                         public void run() {
-                                onSignupFailed();
+                            onSignupFailed();
                             progressDialog.dismiss();
                         }
                     }, 3000);
             return;
         }
+
         AjaxCallback<JSONObject> cb = new AjaxCallback<JSONObject>() {
             @Override
             public void callback(String url, JSONObject object, AjaxStatus status) {
                 if (object != null) {
-                    try {
-                        if (object.getString("result").equals("true")) {
-                            signed = 1;
-                        } else {
-                            signed = 0;
-                        }
-                        new android.os.Handler().postDelayed(
-                                new Runnable() {
-                                    public void run() {
-                                        if (signed == 1)
-                                            onSignupSuccess();
-                                        else
-                                            onSignupFailed();
-                                        progressDialog.dismiss();
-                                    }
-                                }, 3000);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    if (object.has("token")) {
+                        signed = 1;
+                    } else {
+                        signed = 0;
                     }
+                    new android.os.Handler().postDelayed(
+                            new Runnable() {
+                                public void run() {
+                                    if (signed == 1)
+                                        onSignupSuccess();
+                                    else
+                                        onSignupFailed();
+                                    progressDialog.dismiss();
+                                }
+                            }, 3000);
                 }
             }
         };
-
-        aq.ajax("http://sprout.kr/register.php?nickname=" + nickname + "&password=" + password, JSONObject.class, cb);
+        aq.ajax("http://layer7.kr:8282/users/sign_up/?username=" + nickname + "&password=" + password, JSONObject.class, cb);
     }
 
 

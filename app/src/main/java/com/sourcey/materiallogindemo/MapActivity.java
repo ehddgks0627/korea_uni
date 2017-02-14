@@ -23,7 +23,7 @@ import org.json.JSONObject;
 public class MapActivity extends Activity implements OnMapReadyCallback {
     GpsInfo gi;
     GoogleMap gmap;
-    AQuery aq = new AQuery(new);
+    AQuery aq = new AQuery(this);
     JSONArray result;
 
     @Override
@@ -61,8 +61,8 @@ public class MapActivity extends Activity implements OnMapReadyCallback {
                         }
                     }
                 };
-                aq.ajax("http://sprout.kr/getMemoryTree?x=" + gi.getLatitude() + "&y=" + gi.getLongitude(), JSONArray.class, cb);
-
+                aq.ajax("http://sprout.kr/getMemoryTree?lat=" + gi.getLatitude() + "&lng=" + gi.getLongitude(), JSONArray.class, cb);
+                Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_SHORT).show();
                 //TODO
                 return true;
             }

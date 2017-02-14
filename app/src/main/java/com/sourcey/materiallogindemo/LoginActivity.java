@@ -83,30 +83,25 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void callback(String url, JSONObject object, AjaxStatus status) {
                 if (object != null) {
-                    try {
-                        if (object.getString("result").equals("true")) {
-                            logined = 1;
-                        } else{
-                            logined = 0;
-                        }
-                        new android.os.Handler().postDelayed(
-                                new Runnable() {
-                                    public void run() {
-                                        if(logined == 1)
-                                            onLoginSuccess();
-                                        else
-                                            onLoginFailed();
-                                        progressDialog.dismiss();
-                                    }
-                                }, 3000);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    if (object.has("token")) {
+                        logined = 1;
+                    } else {
+                        logined = 0;
                     }
+                    new android.os.Handler().postDelayed(
+                            new Runnable() {
+                                public void run() {
+                                    if (logined == 1)
+                                        onLoginSuccess();
+                                    else
+                                        onLoginFailed();
+                                    progressDialog.dismiss();
+                                }
+                            }, 3000);
                 }
             }
         };
-
-        aq.ajax("http://sprout.kr/?nickname=" + nickname + "&password=" + password, JSONObject.class, cb);
+        aq.ajax("http://layer7.kr:8282/users/sign_in/?username=" + nickname + "&password=" + password, JSONObject.class, cb);
     }
 
 
@@ -116,7 +111,6 @@ public class LoginActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // TODO: Implement successful signup logic here
                 // By default we just finish the Activity and log them in automatically
-                this.finish();
             }
         }
     }
