@@ -1,6 +1,7 @@
 package com.sourcey.materiallogindemo;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -25,11 +26,15 @@ public class MapActivity extends Activity implements OnMapReadyCallback {
     GoogleMap gmap;
     AQuery aq = new AQuery(this);
     JSONArray result;
+    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        Intent intent = getIntent();
+        token = intent.getStringExtra("token");
+        Toast.makeText(getApplicationContext(), token, Toast.LENGTH_SHORT).show();
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
@@ -61,9 +66,9 @@ public class MapActivity extends Activity implements OnMapReadyCallback {
                         }
                     }
                 };
-                aq.ajax("http://sprout.kr/getMemoryTree?lat=" + gi.getLatitude() + "&lng=" + gi.getLongitude(), JSONArray.class, cb);
+                aq.ajax("http://layer7.kr:8282/getMemoryTree?lat=" + gi.getLatitude() + "&lng=" + gi.getLongitude(), JSONArray.class, cb);
                 Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_SHORT).show();
-                //TODO
+
                 return true;
             }
         });

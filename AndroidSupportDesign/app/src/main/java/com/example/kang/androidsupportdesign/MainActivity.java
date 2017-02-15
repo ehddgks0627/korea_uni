@@ -1,5 +1,6 @@
 package com.example.kang.androidsupportdesign;
 
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+import android.content.Intent;
 
 import org.json.JSONObject;
 
@@ -22,15 +24,13 @@ public class MainActivity extends AppCompatActivity {
     private static final int PICK_FROM_CAMERA = 0;
     private static final int PICK_FROM_ALBUM = 1;
     private Uri mimageCaptureUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fab = (FloatingActionButton)findViewById(R.id.FAB);
-
-
-
+        fab = (FloatingActionButton) findViewById(R.id.FAB);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        String url = "tmp_" + String.valueOf(System.currentTimeMillis())+ ".jpg";
-                        mimageCaptureUri = Uri.fromFile(new File(Environment.getDownloadCacheDirectory(),url));
+                        String url = "tmp_" + String.valueOf(System.currentTimeMillis()) + ".jpg";
+                        mimageCaptureUri = Uri.fromFile(new File(Environment.getDownloadCacheDirectory(), url));
 
-                        i.putExtra(MediaStore.EXTRA_OUTPUT,mimageCaptureUri);
-                        startActivityForResult(i,PICK_FROM_CAMERA);
+                        i.putExtra(MediaStore.EXTRA_OUTPUT, mimageCaptureUri);
+                        startActivityForResult(i, PICK_FROM_CAMERA);
 
                     }
                 });
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent i = new Intent(Intent.ACTION_PICK);
                         i.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                        startActivityForResult(i,PICK_FROM_ALBUM);
+                        startActivityForResult(i, PICK_FROM_ALBUM);
                     }
                 });
 
@@ -84,6 +84,26 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode,resultCode,data);
+
+            if(resultCode != RESULT_OK)
+                return;
+
+            switch(requestCode)
+            {
+                case PICK_FROM_ALBUM:
+                {
+                }
+
+                case PICK_FROM_CAMERA:
+                {
+                }
+
+            }
+        }
 
 
     }

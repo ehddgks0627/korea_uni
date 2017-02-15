@@ -3,7 +3,6 @@ package com.sourcey.materiallogindemo;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import android.content.Intent;
 import android.view.View;
@@ -26,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     private int logined = -1;
+    private String token;
+
     AQuery aq = new AQuery(this);
     @Bind(R.id.input_name)
     EditText _nicknameText;
@@ -84,6 +85,11 @@ public class LoginActivity extends AppCompatActivity {
             public void callback(String url, JSONObject object, AjaxStatus status) {
                 if (object != null) {
                     if (object.has("token")) {
+                        try {
+                            token = "Token " + object.getString("token");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         logined = 1;
                     } else {
                         logined = 0;
@@ -125,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
         _loginButton.setEnabled(true);
 
         Intent intent = new Intent(getApplicationContext(), MapActivity.class);
-        intent.putExtra("nickname", _nicknameText.getText().toString());
+        intent.putExtra("token", token);
         startActivity(intent);
         finish();
     }
