@@ -1,11 +1,18 @@
 package com.sourcey.materiallogindemo;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.games.snapshot.Snapshots;
@@ -25,6 +32,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+
 public class MapActivity extends Activity implements OnMapReadyCallback {
     GpsInfo gi;
     GoogleMap gmap;
@@ -34,6 +43,10 @@ public class MapActivity extends Activity implements OnMapReadyCallback {
     JSONObject thread_object;
     JSONArray thread_array;
     JSONArray markerInfo;
+    FloatingActionButton fab;
+
+    private static final int PICK_FROM_CAMERA = 0;
+    private static final int PICK_FROM_ALBUM = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +62,94 @@ public class MapActivity extends Activity implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
         gi = new GpsInfo(this);
         gi.getLocation();
+        fab = (FloatingActionButton) findViewById(R.id.FAB);
+        aq = new AQuery(this);
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(MapActivity.this);
+                dialog.setContentView(R.layout.marker_dialog);
+//                final EditDialog dialog = new EditDialog(MainActivity.this);
+
+                dialog.findViewById(R.id.btn_photo).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(i, PICK_FROM_CAMERA);
+
+                    }
+                });
+
+                dialog.findViewById(R.id.btn_gallery).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(Intent.ACTION_PICK);
+                        i.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                        startActivityForResult(i, PICK_FROM_ALBUM);
+                    }
+                });
+
+                dialog.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialog) {
+
+                    }
+                });
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+
+                    }
+                });
+                dialog.show();
+            }
+        });
     }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if (resultCode == RESULT_OK && requestCode == PICK_FROM_ALBUM ){
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                Log.d("Bitmap :", getEncoded64ImageStringFromBitmap(bitmap));
+            }catch (Exception e){
+                Log.e("error",e.toString());
+            }
+
+        }else if(resultCode == RESULT_OK && requestCode == PICK_FROM_CAMERA){
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                Log.d("Bitmap :", getEncoded64ImageStringFromBitmap(bitmap));
+            }catch (Exception e){
+                Log.e("error",e.toString());
+            }
+
+        }
+    };
+
+
+    public String getEncoded64ImageStringFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+        byte[] byteFormat = stream.toByteArray();
+        // get the base 64 string
+        String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+
+        return imgString;
+    }
+
+
 
     @Override
     public void onMapReady(GoogleMap map) {

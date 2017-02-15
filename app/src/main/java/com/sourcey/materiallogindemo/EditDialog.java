@@ -1,4 +1,4 @@
-package com.example.kang.androidsupportdesign;
+package com.sourcey.materiallogindemo;
 
 /**
  * Created by Kang on 2017. 2. 14..
