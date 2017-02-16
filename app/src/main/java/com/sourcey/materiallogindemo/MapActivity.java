@@ -154,7 +154,7 @@ public class MapActivity extends Activity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap map) {
         LatLng currentLocation = new LatLng(gi.getLatitude(), gi.getLongitude());
-        //LatLng currentLocation = new LatLng(gi.getLatitude(), gi.getLongitude());
+       // LatLng currentLocation = new LatLng(gi.getLatitude(), gi.getLongitude());
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -174,8 +174,11 @@ public class MapActivity extends Activity implements OnMapReadyCallback {
         map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
             public boolean onMyLocationButtonClick() {
+                gi.getLocation();
                 LatLng currentLocation = new LatLng(gi.getLatitude(), gi.getLongitude());
-                gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 18));
+                Toast.makeText(getApplication(), gi.getLatitude() + ""  + gi.getLocation(),Toast.LENGTH_LONG).show();
+                gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16));
+
 
 
                 AjaxCallback<JSONArray> cb = new AjaxCallback<JSONArray>() {
@@ -190,12 +193,18 @@ public class MapActivity extends Activity implements OnMapReadyCallback {
                 Thread thread = new Thread() {
                     public void run() {
                         String abc = comm.getContent("http://layer7.kr:8282/memorys/getMemoryTree?lat=" + gi.getLatitude() + "&lng=" + gi.getLongitude(), "", "GET");
+                        try {
+                            thread_array = new JSONArray(abc);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         Log.e("w", abc);
                     }
                 };
                 thread.start();
                 try {
                     thread.join();
+                    if(thread_array != null)
                     for(int i = 0; i < thread_array.length(); i ++)
                     {
                         MarkerOptions mak = new MarkerOptions();

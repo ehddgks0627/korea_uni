@@ -75,9 +75,38 @@
                 android:layout_marginLeft="10dp"
                 />
         </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="public"
+            android:textColor="#fff"
+            android:layout_below="@+id/photo_group"
+            android:textSize="25dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="private"
+            android:textColor="#fff"
+            android:layout_below="@+id/photo_group"
+            android:textSize="25dp"
+            android:layout_alignRight="@+id/photo_group"/>
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/photo_group"
+            android:id="@+id/checkbox1"
+            android:layout_marginLeft="20dp"
+            android:layout_toLeftOf="@+id/checkbox"
+            android:layout_centerHorizontal="true"/>
+        <RadioButton
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/photo_group"
+            android:id="@+id/checkbox"
+            android:layout_centerHorizontal="true"/>
 
         <Button
-            android:layout_below="@+id/photo_group"
+            android:layout_below="@+id/checkbox"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:textColor="#fff"

@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.hardware.location.gps" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -31,7 +32,7 @@
         <activity
             android:name="com.sourcey.materiallogindemo.MapActivity"
             android:theme="@style/AppTheme.Dark" />
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCFdTOA0uFbAnnHfL6A78wOAqh4nB7l4nQ" />
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDX1fy2KvYT6h0g4b1_BnWX8pf2hEcTE1Y" />
     </application>
 
 </manifest>
